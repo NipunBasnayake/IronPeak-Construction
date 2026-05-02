@@ -1,4 +1,3 @@
-import Lenis from "lenis";
 import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Footer } from "./components/layout/Footer";
@@ -16,13 +15,16 @@ function ScrollManager() {
   const location = useLocation();
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timeout = window.setTimeout(() => {
       if (location.hash) {
-        document
-          .querySelector(location.hash)
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        target?.scrollIntoView({
+          behavior: prefersReduced ? "auto" : "smooth",
+          block: "start",
+        });
       } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: prefersReduced ? "auto" : "smooth" });
       }
     }, 80);
 
@@ -39,22 +41,32 @@ function useLenis() {
       return;
     }
 
-    const lenis = new Lenis({
-      duration: 1.05,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
     let frame = 0;
+    let cancelled = false;
+    let lenis: { raf: (time: number) => void; destroy: () => void } | undefined;
 
-    const raf = (time: number) => {
-      lenis.raf(time);
+    import("lenis").then(({ default: Lenis }) => {
+      if (cancelled) {
+        return;
+      }
+
+      lenis = new Lenis({
+        duration: 1.05,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+
+      const raf = (time: number) => {
+        lenis?.raf(time);
+        frame = requestAnimationFrame(raf);
+      };
+
       frame = requestAnimationFrame(raf);
-    };
-
-    frame = requestAnimationFrame(raf);
+    });
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(frame);
-      lenis.destroy();
+      lenis?.destroy();
     };
   }, []);
 }

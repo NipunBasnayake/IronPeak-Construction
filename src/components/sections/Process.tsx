@@ -47,6 +47,7 @@ export function Process() {
   const lineRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     let cleanup = () => {};
     const section = sectionRef.current;
     const line = lineRef.current;
@@ -62,6 +63,9 @@ export function Process() {
 
     import("gsap").then(async ({ default: gsap }) => {
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (cancelled) {
+        return;
+      }
       gsap.registerPlugin(ScrollTrigger);
       const trigger = gsap.fromTo(
         line,
@@ -85,6 +89,7 @@ export function Process() {
     });
 
     return () => {
+      cancelled = true;
       cleanup();
     };
   }, []);

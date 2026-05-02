@@ -1,10 +1,17 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { ArrowDownRight, HardHat, ShieldCheck } from "lucide-react";
 import { images } from "../../assets/images/assets";
 import { videos } from "../../assets/videos/assets";
 import { AnimatedButton } from "../ui/AnimatedButton";
 
 export function Hero() {
+  const shouldReduceMotion = useReducedMotion();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const smoothX = useSpring(mouseX, { stiffness: 35, damping: 18 });
@@ -17,6 +24,9 @@ export function Hero() {
       id="home"
       className="relative min-h-screen overflow-hidden bg-iron-dark"
       onMouseMove={(event) => {
+        if (shouldReduceMotion || window.matchMedia("(pointer: coarse)").matches) {
+          return;
+        }
         const rect = event.currentTarget.getBoundingClientRect();
         mouseX.set((event.clientX - rect.left) / rect.width - 0.5);
         mouseY.set((event.clientY - rect.top) / rect.height - 0.5);
@@ -27,6 +37,11 @@ export function Hero() {
         <img
           src={images.heroFallback}
           alt="Cranes and construction structure at a high-rise job site"
+          width={2200}
+          height={1467}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover md:hidden"
         />
       </picture>
@@ -38,6 +53,7 @@ export function Hero() {
         playsInline
         preload="metadata"
         poster={images.heroFallback}
+        aria-hidden="true"
       >
         <source src={videos.hero} type="video/mp4" />
       </video>

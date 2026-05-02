@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { AnimatedButton } from "./AnimatedButton";
+import { OptimizedImage } from "./OptimizedImage";
 
 type ProjectCardProps = {
   title: string;
@@ -9,6 +10,7 @@ type ProjectCardProps = {
   year: string;
   image: string;
   summary: string;
+  slug: string;
   index: number;
 };
 
@@ -19,20 +21,26 @@ export function ProjectCard({
   year,
   image,
   summary,
+  slug,
   index,
 }: ProjectCardProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 34 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.55, delay: index * 0.05 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: index * 0.05 }}
       className="group relative isolate min-h-[420px] overflow-hidden border border-white/10 bg-iron-charcoal shadow-industrial"
     >
-      <img
+      <OptimizedImage
         src={image}
         alt={`${title} construction project in ${location}`}
         loading={index < 2 ? "eager" : "lazy"}
+        width={1200}
+        height={800}
+        sizes="(min-width: 1024px) 50vw, 100vw"
         className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05080d] via-[#05080d]/55 to-transparent" />
@@ -55,7 +63,11 @@ export function ProjectCard({
           {summary}
         </p>
         <div className="mt-6">
-          <AnimatedButton variant="secondary" className="min-h-10 px-4 py-2">
+          <AnimatedButton
+            href={`/projects#${slug}`}
+            variant="secondary"
+            className="min-h-10 px-4 py-2"
+          >
             <span className="inline-flex items-center gap-2">
               View Case Study <ArrowUpRight size={16} aria-hidden="true" />
             </span>

@@ -39,7 +39,9 @@ export function Projects({ fullPage = false }: ProjectsProps) {
 
         <div className="grid gap-5 lg:grid-cols-2">
           {visibleProjects.map((project, index) => (
-            <ProjectCard key={project.title} {...project} index={index} />
+            <div key={project.title} id={project.slug}>
+              <ProjectCard {...project} index={index} />
+            </div>
           ))}
         </div>
       </div>

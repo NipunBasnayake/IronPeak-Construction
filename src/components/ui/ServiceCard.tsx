@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 
 type ServiceCardProps = {
@@ -14,13 +14,15 @@ export function ServiceCard({
   icon: Icon,
   index,
 }: ServiceCardProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-70px" }}
-      transition={{ duration: 0.55, delay: index * 0.06 }}
-      whileHover={{ y: -10, rotateX: 3, rotateY: -3 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.55, delay: index * 0.06 }}
+      {...(!shouldReduceMotion && { whileHover: { y: -10, rotateX: 3, rotateY: -3 } })}
       className="group relative min-h-[270px] overflow-hidden border border-white/10 bg-[#0b0f14]/85 p-7 shadow-industrial transition duration-300 hover:border-iron-orange/70 hover:shadow-[0_24px_70px_rgba(249,115,22,0.16)]"
     >
       <div className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">

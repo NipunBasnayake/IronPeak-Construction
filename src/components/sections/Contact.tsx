@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { images } from "../../assets/images/assets";
 import { AnimatedButton } from "../ui/AnimatedButton";
+import { OptimizedImage } from "../ui/OptimizedImage";
 import { SectionTitle } from "../ui/SectionTitle";
 
 type FormState = {
@@ -53,6 +54,8 @@ const contactItems = [
   { icon: Mail, label: "contact@ironpeakconstruction.com" },
   { icon: Clock, label: "Monday to Friday, 8:00 AM - 6:00 PM" },
 ];
+const projectTypes = ["Commercial", "Residential", "Industrial", "Renovation", "Infrastructure"];
+const budgetRanges = ["$250K - $1M", "$1M - $5M", "$5M - $15M", "$15M+"];
 
 export function Contact() {
   const [form, setForm] = useState<FormState>(initialForm);
@@ -76,7 +79,7 @@ export function Contact() {
   }
 
   function fieldClass(error?: string) {
-    return `w-full border bg-black/25 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-iron-orange ${
+    return `w-full border bg-black/25 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-iron-orange focus:ring-2 focus:ring-iron-orange/30 ${
       error ? "border-iron-orange" : "border-white/12"
     }`;
   }
@@ -109,6 +112,8 @@ export function Contact() {
               <label className="grid gap-2 text-sm font-bold text-slate-300">
                 Name
                 <input
+                  id="contact-name"
+                  name="name"
                   className={fieldClass(errors.name)}
                   value={form.name}
                   onChange={(event) => {
@@ -116,13 +121,21 @@ export function Contact() {
                     setForm({ ...form, name: event.target.value });
                   }}
                   placeholder="Your name"
+                  autoComplete="name"
                   aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? "contact-name-error" : undefined}
                 />
-                {errors.name && <span className="text-xs text-iron-orange">{errors.name}</span>}
+                {errors.name && (
+                  <span id="contact-name-error" className="text-xs text-iron-orange">
+                    {errors.name}
+                  </span>
+                )}
               </label>
               <label className="grid gap-2 text-sm font-bold text-slate-300">
                 Email
                 <input
+                  id="contact-email"
+                  name="email"
                   className={fieldClass(errors.email)}
                   type="email"
                   value={form.email}
@@ -131,27 +144,44 @@ export function Contact() {
                     setForm({ ...form, email: event.target.value });
                   }}
                   placeholder="you@example.com"
+                  autoComplete="email"
                   aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? "contact-email-error" : undefined}
                 />
-                {errors.email && <span className="text-xs text-iron-orange">{errors.email}</span>}
+                {errors.email && (
+                  <span id="contact-email-error" className="text-xs text-iron-orange">
+                    {errors.email}
+                  </span>
+                )}
               </label>
               <label className="grid gap-2 text-sm font-bold text-slate-300">
                 Phone
                 <input
+                  id="contact-phone"
+                  name="phone"
                   className={fieldClass(errors.phone)}
+                  type="tel"
                   value={form.phone}
                   onChange={(event) => {
                     setSuccess(false);
                     setForm({ ...form, phone: event.target.value });
                   }}
                   placeholder="+1 (555) 000-0000"
+                  autoComplete="tel"
                   aria-invalid={Boolean(errors.phone)}
+                  aria-describedby={errors.phone ? "contact-phone-error" : undefined}
                 />
-                {errors.phone && <span className="text-xs text-iron-orange">{errors.phone}</span>}
+                {errors.phone && (
+                  <span id="contact-phone-error" className="text-xs text-iron-orange">
+                    {errors.phone}
+                  </span>
+                )}
               </label>
               <label className="grid gap-2 text-sm font-bold text-slate-300">
                 Project Type
                 <select
+                  id="contact-project-type"
+                  name="projectType"
                   className={fieldClass(errors.projectType)}
                   value={form.projectType}
                   onChange={(event) => {
@@ -159,21 +189,26 @@ export function Contact() {
                     setForm({ ...form, projectType: event.target.value });
                   }}
                   aria-invalid={Boolean(errors.projectType)}
+                  aria-describedby={
+                    errors.projectType ? "contact-project-type-error" : undefined
+                  }
                 >
                   <option value="">Select type</option>
-                  <option>Commercial</option>
-                  <option>Residential</option>
-                  <option>Industrial</option>
-                  <option>Renovation</option>
-                  <option>Infrastructure</option>
+                  {projectTypes.map((type) => (
+                    <option key={type}>{type}</option>
+                  ))}
                 </select>
                 {errors.projectType && (
-                  <span className="text-xs text-iron-orange">{errors.projectType}</span>
+                  <span id="contact-project-type-error" className="text-xs text-iron-orange">
+                    {errors.projectType}
+                  </span>
                 )}
               </label>
               <label className="grid gap-2 text-sm font-bold text-slate-300 sm:col-span-2">
                 Budget Range
                 <select
+                  id="contact-budget"
+                  name="budget"
                   className={fieldClass(errors.budget)}
                   value={form.budget}
                   onChange={(event) => {
@@ -181,18 +216,24 @@ export function Contact() {
                     setForm({ ...form, budget: event.target.value });
                   }}
                   aria-invalid={Boolean(errors.budget)}
+                  aria-describedby={errors.budget ? "contact-budget-error" : undefined}
                 >
                   <option value="">Select budget range</option>
-                  <option>$250K - $1M</option>
-                  <option>$1M - $5M</option>
-                  <option>$5M - $15M</option>
-                  <option>$15M+</option>
+                  {budgetRanges.map((range) => (
+                    <option key={range}>{range}</option>
+                  ))}
                 </select>
-                {errors.budget && <span className="text-xs text-iron-orange">{errors.budget}</span>}
+                {errors.budget && (
+                  <span id="contact-budget-error" className="text-xs text-iron-orange">
+                    {errors.budget}
+                  </span>
+                )}
               </label>
               <label className="grid gap-2 text-sm font-bold text-slate-300 sm:col-span-2">
                 Message
                 <textarea
+                  id="contact-message"
+                  name="message"
                   className={`${fieldClass(errors.message)} min-h-36 resize-y`}
                   value={form.message}
                   onChange={(event) => {
@@ -201,16 +242,19 @@ export function Contact() {
                   }}
                   placeholder="Tell us about the site, timeline, and project goals."
                   aria-invalid={Boolean(errors.message)}
+                  aria-describedby={errors.message ? "contact-message-error" : undefined}
                 />
                 {errors.message && (
-                  <span className="text-xs text-iron-orange">{errors.message}</span>
+                  <span id="contact-message-error" className="text-xs text-iron-orange">
+                    {errors.message}
+                  </span>
                 )}
               </label>
             </div>
             <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
               <AnimatedButton type="submit">Request Free Consultation</AnimatedButton>
               {success && (
-                <p className="text-sm font-bold text-iron-orange">
+                <p className="text-sm font-bold text-iron-orange" aria-live="polite">
                   Request received. We&apos;ll be in touch shortly.
                 </p>
               )}
@@ -235,10 +279,12 @@ export function Contact() {
               </div>
             </div>
             <div className="relative min-h-[360px] overflow-hidden border border-white/10">
-              <img
+              <OptimizedImage
                 src={images.map}
                 alt="Map-style placeholder for IronPeak Construction Co. Dallas office"
-                loading="lazy"
+                width={1000}
+                height={667}
+                sizes="(min-width: 1024px) 45vw, 100vw"
                 className="absolute inset-0 h-full w-full object-cover grayscale"
               />
               <div className="absolute inset-0 bg-[#07111f]/68" />

@@ -3,6 +3,7 @@ import { images } from "../assets/images/assets";
 export const projects = [
   {
     title: "Skyline Business Tower",
+    slug: "skyline-business-tower",
     location: "Dallas, Texas",
     type: "Commercial",
     year: "2026",
@@ -12,6 +13,7 @@ export const projects = [
   },
   {
     title: "Austin Luxury Villas",
+    slug: "austin-luxury-villas",
     location: "Austin, Texas",
     type: "Residential",
     year: "2025",
@@ -21,6 +23,7 @@ export const projects = [
   },
   {
     title: "Denver Industrial Warehouse",
+    slug: "denver-industrial-warehouse",
     location: "Denver, Colorado",
     type: "Industrial",
     year: "2025",
@@ -30,6 +33,7 @@ export const projects = [
   },
   {
     title: "Miami Retail Complex",
+    slug: "miami-retail-complex",
     location: "Miami, Florida",
     type: "Commercial",
     year: "2024",
@@ -39,6 +43,7 @@ export const projects = [
   },
   {
     title: "Phoenix Concrete Works",
+    slug: "phoenix-concrete-works",
     location: "Phoenix, Arizona",
     type: "Infrastructure",
     year: "2024",
@@ -48,6 +53,7 @@ export const projects = [
   },
   {
     title: "Seattle Urban Offices",
+    slug: "seattle-urban-offices",
     location: "Seattle, Washington",
     type: "Office",
     year: "2023",

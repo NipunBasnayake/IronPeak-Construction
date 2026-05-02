@@ -9,6 +9,23 @@ const footerServices = [
   "Industrial Facilities",
   "Project Management",
 ];
+const socialLinks = [
+  {
+    label: "IronPeak on Facebook",
+    href: "https://www.facebook.com/ironpeakconstruction",
+    icon: FaFacebookF,
+  },
+  {
+    label: "IronPeak on Instagram",
+    href: "https://www.instagram.com/ironpeakconstruction",
+    icon: FaInstagram,
+  },
+  {
+    label: "IronPeak on LinkedIn",
+    href: "https://www.linkedin.com/company/ironpeak-construction",
+    icon: FaLinkedinIn,
+  },
+] as const;
 
 export function Footer() {
   return (
@@ -34,11 +51,13 @@ export function Footer() {
             stage.
           </p>
           <div className="mt-6 flex gap-3">
-            {[FaFacebookF, FaInstagram, FaLinkedinIn].map((Icon, index) => (
+            {socialLinks.map(({ href, icon: Icon, label }) => (
               <a
-                key={index}
-                href="/#home"
-                aria-label="IronPeak social profile"
+                key={label}
+                href={href}
+                aria-label={label}
+                rel="noopener noreferrer"
+                target="_blank"
                 className="flex h-10 w-10 items-center justify-center border border-white/10 bg-white/[0.04] text-slate-300 transition hover:border-iron-orange hover:text-iron-orange"
               >
                 <Icon size={18} aria-hidden="true" />

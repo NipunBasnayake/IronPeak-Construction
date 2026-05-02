@@ -1,4 +1,10 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import type { ComponentPropsWithoutRef, MouseEvent, ReactNode } from "react";
 import { clsx } from "clsx";
 
@@ -10,6 +16,7 @@ type NativeButtonProps = Omit<
   | "onDrag"
   | "onDragEnd"
   | "onDragStart"
+  | "style"
 >;
 
 type AnimatedButtonProps = {
@@ -26,6 +33,7 @@ export function AnimatedButton({
   type = "button",
   ...props
 }: AnimatedButtonProps) {
+  const shouldReduceMotion = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 180, damping: 14, mass: 0.25 });
@@ -46,6 +54,9 @@ export function AnimatedButton({
   const motionProps = {
     style: { x: springX, y: springY, rotate },
     onMouseMove: (event: MouseEvent<HTMLElement>) => {
+      if (shouldReduceMotion) {
+        return;
+      }
       const rect = event.currentTarget.getBoundingClientRect();
       x.set((event.clientX - rect.left - rect.width / 2) * 0.18);
       y.set((event.clientY - rect.top - rect.height / 2) * 0.22);
@@ -54,7 +65,7 @@ export function AnimatedButton({
       x.set(0);
       y.set(0);
     },
-    whileTap: { scale: 0.97 },
+    ...(!shouldReduceMotion && { whileTap: { scale: 0.97 } }),
   };
 
   const content = (

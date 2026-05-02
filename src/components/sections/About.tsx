@@ -2,11 +2,12 @@ import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { images } from "../../assets/images/assets";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { OptimizedImage } from "../ui/OptimizedImage";
 import { SectionTitle } from "../ui/SectionTitle";
 
 const statements = [
   "Mission: deliver construction that strengthens communities and withstands real use.",
-  "Vision: be America&apos;s most trusted builder for ambitious commercial and residential work.",
+  "Vision: be America's most trusted builder for ambitious commercial and residential work.",
   "Quality: pair premium materials with relentless field accountability.",
 ];
 
@@ -22,10 +23,12 @@ export function About() {
             Since 1999
           </p>
           <div className="relative overflow-hidden border border-white/10">
-            <img
+            <OptimizedImage
               src={images.architect}
-              alt="Construction engineer reviewing architectural plans"
-              loading="lazy"
+              alt="Construction engineer reviewing building plans at an active site"
+              width={1200}
+              height={800}
+              sizes="(min-width: 1024px) 52vw, 100vw"
               className="h-[520px] w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#05080d]/80 to-transparent" />
@@ -57,10 +60,7 @@ export function About() {
                 className="flex gap-4 border border-white/10 bg-white/[0.04] p-5"
               >
                 <CheckCircle2 className="mt-1 shrink-0 text-iron-orange" size={22} />
-                <p
-                  className="text-sm leading-7 text-slate-300"
-                  dangerouslySetInnerHTML={{ __html: item }}
-                />
+                <p className="text-sm leading-7 text-slate-300">{item}</p>
               </motion.div>
             ))}
           </div>

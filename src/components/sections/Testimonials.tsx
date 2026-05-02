@@ -1,5 +1,6 @@
+import { useReducedMotion } from "framer-motion";
 import { Star } from "lucide-react";
-import { Autoplay, EffectFade, Pagination } from "swiper/modules";
+import { A11y, Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -8,6 +9,8 @@ import { testimonials } from "../../data/testimonials";
 import { SectionTitle } from "../ui/SectionTitle";
 
 export function Testimonials() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="testimonials" className="section-padding bg-iron-dark">
       <div className="safe-container grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
@@ -20,12 +23,17 @@ export function Testimonials() {
 
         <div className="overflow-hidden border border-white/10 bg-white/[0.045] p-4 shadow-industrial backdrop-blur">
           <Swiper
-            modules={[Autoplay, EffectFade, Pagination]}
+            modules={[A11y, Autoplay, EffectFade, Pagination]}
             effect="fade"
             fadeEffect={{ crossFade: true }}
             loop
-            autoplay={{ delay: 4200, disableOnInteraction: false }}
+            autoplay={
+              shouldReduceMotion
+                ? false
+                : { delay: 4200, disableOnInteraction: false, pauseOnMouseEnter: true }
+            }
             pagination={{ clickable: true }}
+            a11y={{ enabled: true }}
             className="min-h-[340px]"
           >
             {testimonials.map((item) => (
@@ -38,7 +46,7 @@ export function Testimonials() {
                       ))}
                     </div>
                     <blockquote className="text-2xl font-bold leading-snug text-white text-pretty sm:text-3xl">
-                      “{item.review}”
+                      "{item.review}"
                     </blockquote>
                   </div>
                   <footer className="mt-10 border-t border-white/10 pt-6">
