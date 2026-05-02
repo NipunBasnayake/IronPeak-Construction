@@ -58,6 +58,10 @@ video {
   max-width: 100%;
 }
 
+[id] {
+  scroll-margin-top: 6rem;
+}
+
 ::selection {
   background: rgba(249, 115, 22, 0.35);
 }

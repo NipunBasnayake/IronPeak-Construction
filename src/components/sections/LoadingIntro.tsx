@@ -18,7 +18,7 @@ export function LoadingIntro({ onComplete }: LoadingIntroProps) {
         animate={{ backgroundPosition: "120px 80px" }}
         transition={{ duration: 2.2, ease: "easeInOut" }}
       />
-      <div className="relative w min-w-[280px] px-6 text-center">
+      <div className="relative min-w-[280px] px-6 text-center">
         <motion.svg
           viewBox="0 0 520 160"
           className="mx-auto mb-8 h-28 w-full max-w-lg text-iron-orange"

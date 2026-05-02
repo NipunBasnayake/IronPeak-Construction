@@ -63,8 +63,6 @@ export function Contact() {
     return submitted ? validateForm(form) : {};
   }, [form, submitted]);
 
-  const isValid = Object.keys(errors).length === 0;
-
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors = validateForm(form);
