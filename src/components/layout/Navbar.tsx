@@ -40,18 +40,11 @@ export function Navbar() {
           className="group flex items-center gap-3"
           aria-label="IronPeak Construction Co. home"
         >
-          <span className="relative flex h-11 w-11 items-center justify-center border border-iron-orange bg-iron-orange/10">
-            <span className="font-display text-xl text-white">IP</span>
-            <span className="absolute -right-1 -top-1 h-3 w-3 bg-iron-orange" />
-          </span>
-          <span>
-            <span className="block text-sm font-black uppercase tracking-[0.18em] text-white">
-              IronPeak
-            </span>
-            <span className="block text-[0.65rem] font-bold uppercase tracking-[0.32em] text-slate-400">
-              Construction Co.
-            </span>
-          </span>
+          <img
+            src="/IronPeak%20Logo.png"
+            alt="IronPeak Construction Co. logo"
+            className="w-40 object-contain"
+          />
         </Link>
 
         <div className="hidden items-center gap-6 lg:flex">

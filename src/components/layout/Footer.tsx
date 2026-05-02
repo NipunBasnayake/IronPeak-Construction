@@ -33,17 +33,11 @@ export function Footer() {
       <div className="safe-container grid gap-10 lg:grid-cols-[1.4fr_0.8fr_1fr_1fr]">
         <div>
           <Link to="/#home" className="inline-flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center border border-iron-orange bg-iron-orange/10 font-display text-xl text-white">
-              IP
-            </span>
-            <span>
-              <span className="block text-lg font-black uppercase tracking-[0.18em] text-white">
-                IronPeak
-              </span>
-              <span className="block text-[0.7rem] font-bold uppercase tracking-[0.32em] text-slate-400">
-                Construction Co.
-              </span>
-            </span>
+            <img
+              src="/IronPeak%20Logo.png"
+              alt="IronPeak Construction Co. logo"
+              className="w-40 object-contain"
+            />
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-7 text-slate-400">
             Building America&apos;s future with strength, precision, and

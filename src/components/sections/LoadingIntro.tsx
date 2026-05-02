@@ -19,44 +19,15 @@ export function LoadingIntro({ onComplete }: LoadingIntroProps) {
         transition={{ duration: 2.2, ease: "easeInOut" }}
       />
       <div className="relative min-w-[280px] px-6 text-center">
-        <motion.svg
-          viewBox="0 0 520 160"
-          className="mx-auto mb-8 h-28 w-full max-w-lg text-iron-orange"
-          initial="hidden"
-          animate="visible"
+        <motion.img
+          src="/IronPeak%20Logo.png"
+          alt="IronPeak Construction Co. logo"
+          className="mx-auto mb-8 h-28 w-28 object-contain"
+          initial={{ opacity: 0, scale: 0.92, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           onAnimationComplete={onComplete}
-        >
-          <motion.path
-            d="M30 120 L150 40 L245 120 L342 58 L490 120"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="5"
-            strokeLinejoin="round"
-            variants={{
-              hidden: { pathLength: 0, opacity: 0 },
-              visible: {
-                pathLength: 1,
-                opacity: 1,
-                transition: { duration: 1.25, ease: "easeInOut" },
-              },
-            }}
-          />
-          <motion.path
-            d="M88 120 V78 M150 40 V120 M245 120 V78 M342 58 V120 M428 120 V88"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeDasharray="8 10"
-            variants={{
-              hidden: { pathLength: 0, opacity: 0 },
-              visible: {
-                pathLength: 1,
-                opacity: 0.8,
-                transition: { duration: 1.1, delay: 0.25, ease: "easeInOut" },
-              },
-            }}
-          />
-        </motion.svg>
+        />
         <motion.p
           className="font-display text-3xl uppercase leading-none text-white sm:text-5xl"
           initial={{ opacity: 0, y: 16 }}
